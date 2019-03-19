@@ -1,5 +1,4 @@
 /**
- * 版权所有(C)，上海海鼎信息工程股份有限公司，2016，所有权利保留。
  * <p>
  * 项目名：	spring-action
  * 文件名：	CDPlayerTest.java
