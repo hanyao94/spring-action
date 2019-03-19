@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan
+//@ComponentScan(basePackages = {"com.seven.spring.action.autoconfig"}) //扫描基础包，设置后，对应包下的类，无需再加@Component注解
 public class CDPlayerConfig {
-
 
 }
