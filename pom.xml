@@ -11,6 +11,9 @@
   <description>针对Spring in Action 各个篇章的代码实践</description>
   <modules>
     <module>Chapter_02</module>
+    <module>Chapter_03</module>
+    <module>Chapter_03</module>
+    <module>Chapter_03</module>
   </modules>
 
 
