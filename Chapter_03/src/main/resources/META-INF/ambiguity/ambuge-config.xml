@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- primary="true" 标志首选，当一个接口有多个实现的时候 -->
+  <bean primary="true" id="cake" class="com.seven.spring.action.ambiguity.Cake"></bean>
+
+  <bean id="cookie" class="com.seven.spring.action.ambiguity.Cookies"></bean>
+  <bean id="iceCream" class="com.seven.spring.action.ambiguity.IceCream"></bean>
+
+  <bean id="eat" class="com.seven.spring.action.ambiguity.Eat"></bean>
+
+
+</beans>
