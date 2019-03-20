@@ -12,11 +12,13 @@ package com.seven.spring.action.conditional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * @author seven
  */
 @Configuration
+//@PropertySource("classpath:META-INF/conditional/app.properties") //设置之后会出现环境变量
 public class MagicConfig {
 
   @Bean
