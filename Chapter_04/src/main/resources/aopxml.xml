@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+  <aop:aspectj-autoproxy/>
+
+  <bean id="concert" class="com.seven.spring.action.aopxml.Concert"></bean>
+
+  <beans profile="simple">
+    <bean id="audience" class="com.seven.spring.action.aopxml.Audience"></bean>
+
+    <aop:config>
+      <aop:aspect ref="audience">
+        <aop:pointcut id="performance" expression="execution(* com.seven.spring.action.aopxml.Performance.perform(..))"/>
+        <aop:before pointcut-ref="performance" method="silenceCellPhones"/>
+        <aop:before pointcut-ref="performance" method="takeSeats"/>
+        <aop:after-returning pointcut-ref="performance" method="applause"/>
+        <aop:after-throwing pointcut-ref="performance" method="demandRefund"/>
+      </aop:aspect>
+    </aop:config>
+  </beans>
+
+  <beans profile="around">
+    <bean id="audienceAround" class="com.seven.spring.action.aopxml.AudienceAround"></bean>
+
+    <aop:config>
+      <aop:aspect ref="audienceAround">
+        <aop:pointcut id="performance" expression="execution(* com.seven.spring.action.aopxml.Performance.perform(..))"/>
+        <aop:around pointcut-ref="performance" method="watchPerformance"/>
+      </aop:aspect>
+    </aop:config>
+  </beans>
+
+  <beans profile="aroundWidthParams">
+    <bean id="counter" class="com.seven.spring.action.aopxml.TrackCounter"></bean>
+    <bean id="cd" class="com.seven.spring.action.aopxml.BlankDisc">
+      <property name="title" value="klkl"/>
+      <property name="artist" value="klkl"/>
+      <property name="tracks">
+        <list>
+          <value>sge. aaaaaaaa</value>
+          <value>sge. bbbbbbbbb</value>
+          <value>sge. cccccccccc</value>
+          <value>sge. ddddddddddd</value>
+          <value>sge. eeeeeeeeeeee</value>
+          <value>sge. fffffffffffff</value>
+          <value>sge. hhhhhhhhhhhhhh</value>
+          <value>sge. iiiiiiiiiiiiiii</value>
+        </list>
+      </property>
+
+    </bean>
+    <aop:config>
+      <aop:aspect ref="counter">
+        <aop:pointcut id="trackPlayed" expression="execution(* com.seven.spring.action.aopxml.CompactDisc.playTrack(int )) and args(trackNumber)"/>
+        <aop:before pointcut-ref="trackPlayed" method="countTrack"/>
+      </aop:aspect>
+    </aop:config>
+  </beans>
+
+  <beans profile="introduce">
+
+    <bean id="encoreableIntroducer" class="com.seven.spring.action.aopxml.EncoreableIntroducer"></bean>
+    <bean id="defaultEncoreable" class="com.seven.spring.action.aopxml.DefaultEncoreable"></bean>
+
+    <aop:config>
+      <aop:aspect ref="encoreableIntroducer">
+        <!--<aop:declare-parents types-matching="com.seven.spring.action.aopxml.Performance+"-->
+                             <!--implement-interface="com.seven.spring.action.aopxml.Encoreable"-->
+                             <!--delegate-ref="defaultEncoreable"/>-->
+         <aop:declare-parents types-matching="com.seven.spring.action.aopxml.Performance+"
+                              implement-interface="com.seven.spring.action.aopxml.Encoreable"
+                              default-impl="com.seven.spring.action.aopxml.DefaultEncoreable"/>
+      </aop:aspect>
+    </aop:config>
+  </beans>
+
+
+</beans>
