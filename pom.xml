@@ -13,6 +13,7 @@
     <module>Chapter_02</module>
     <module>Chapter_03</module>
     <module>Chapter_04</module>
+    <module>Chapter_05</module>
   </modules>
 
 
@@ -25,6 +26,7 @@
     <sping.security.version>3.2.0.RELEASE</sping.security.version>
     <junit.version>4.11</junit.version>
     <aspectj.version>1.8.13</aspectj.version>
+    <spring.mvc.version>4.3.9.RELEASE</spring.mvc.version>
   </properties>
 
 
