@@ -21,4 +21,16 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 
   <mvc:resources location="/resources/" mapping="/resources/**"/>
 
+  <!-- 文件上传表单的视图解析器 StandardServletMultipartResolver -->
+  <!--<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></bean>-->
+
+  <!-- 文件上传表单的视图解析器 CommonsMultipartResolver -->
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="defaultEncoding" value="utf-8"/>
+    <!-- 最大内存大小 -->
+    <property name="maxInMemorySize" value="10240"/>
+    <!-- 最大文件大小，-1为不限制大小 -->
+    <property name="maxUploadSize" value="-1"/>
+  </bean>
+
 </beans>

@@ -1,8 +1,6 @@
-<!DOCTYPE web-app PUBLIC
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0"?>
 
-<web-app>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <!--设置根上下文配置文件,启动的时候将需要的bean配置进去-->
   <context-param>
     <param-name>contextConfigLocation</param-name>
@@ -19,6 +17,12 @@
     <servlet-name>appServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
+    <!--使用 StandardServletMultipartResolver 上传才需要配置-->
+<!--    <multipart-config>
+      <location>D:\spring\spring-action\Chapter_07\src\main\webapp\resources</location>
+      <max-file-size>2097152</max-file-size>
+      <max-request-size>4194304</max-request-size>
+    </multipart-config>-->
   </servlet>
 
   <!--将DispatcherServlet映射到"/"-->
