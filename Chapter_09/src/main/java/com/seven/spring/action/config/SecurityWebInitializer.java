@@ -1,0 +1,10 @@
+package com.seven.spring.action.config;
+
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+
+//以Java的方式来配置DelegatingFilterProxy
+//AbstractSecurityWebApplicationInitializer实现了WebApplication-Initializer，
+//因此Spring会发现它，并用它在Web容器中注册DelegatingFilterProxy
+//DelegatingFilterProxy会拦截发往应用中的请求，并将请求委托给ID为springSecurityFilterChain的bean
+public class SecurityWebInitializer extends AbstractSecurityWebApplicationInitializer {
+}

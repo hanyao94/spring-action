@@ -16,6 +16,7 @@
     <module>Chapter_05</module>
     <module>Chapter_07</module>
     <module>Chapter_07</module>
+    <module>Chapter_09</module>
   </modules>
 
 
@@ -23,7 +24,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
 
-    <spring.version>4.0.7.RELEASE</spring.version>
+    <spring.version>4.3.9.RELEASE</spring.version>
     <sping.data.jpa.version>1.3.2.RELEASE</sping.data.jpa.version>
     <sping.security.version>3.2.0.RELEASE</sping.security.version>
     <junit.version>4.11</junit.version>
@@ -31,6 +32,11 @@
     <spring.mvc.version>4.3.9.RELEASE</spring.mvc.version>
     <commons-fileuplad.version>1.3.3</commons-fileuplad.version>
     <commons-io.version>2.3</commons-io.version>
+    <javax.servlet.version>3.1.0</javax.servlet.version>
+    <swagger.version>1.5.18</swagger.version>
+    <springfox-swagger.version>2.9.0</springfox-swagger.version>
+    <version.jackson>2.9.6</version.jackson>
+    <spring-security.version>4.2.3.RELEASE</spring-security.version>
   </properties>
 
 
@@ -82,6 +88,19 @@
         <artifactId>spring-test</artifactId>
         <version>${spring.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+
+
       <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjweaver</artifactId>
@@ -97,7 +116,46 @@
         <artifactId>commons-fileupload</artifactId>
         <version>${commons-fileuplad.version}</version>
       </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${javax.servlet.version}</version>
+      </dependency>
 
+
+      <!-- jackson用于将springfox返回的文档对象转换成JSON字符串 -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${version.jackson}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${version.jackson}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${version.jackson}</version>
+      </dependency>
+
+      <!-- ========swagger2 api自动生成工具 start======== -->
+      <dependency>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+        <version>${springfox-swagger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger-ui</artifactId>
+        <version>${springfox-swagger.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>junit</groupId>
