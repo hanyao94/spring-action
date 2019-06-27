@@ -19,6 +19,7 @@
     <module>Chapter_09</module>
     <module>Chapter_10</module>
     <module>Chapter_11</module>
+    <module>Chapter_12</module>
   </modules>
 
 
@@ -43,6 +44,8 @@
     <version.javax.persistence>1.0.2</version.javax.persistence>
     <hibernate-core.version>4.3.11.Final</hibernate-core.version>
     <spring-data-jpa.version>1.11.9.RELEASE</spring-data-jpa.version>
+    <spring-data-redis.version>2.1.5.RELEASE</spring-data-redis.version>
+    <jedis.version>2.9.0</jedis.version>
   </properties>
 
 
@@ -191,6 +194,18 @@
         <groupId>javax.persistence</groupId>
         <artifactId>persistence-api</artifactId>
         <version>${version.javax.persistence}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-redis</artifactId>
+        <version>${spring-data-redis.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>${jedis.version}</version>
       </dependency>
 
       <dependency>

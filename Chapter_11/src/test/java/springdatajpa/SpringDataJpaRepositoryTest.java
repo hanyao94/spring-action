@@ -9,8 +9,8 @@
  */
 package springdatajpa;
 
-import com.spring.action.springdatajpa.config.SpringDataJpaConfig;
-import com.spring.action.springdatajpa.dao.RoleRepository;
+import com.spring.action.redis.springdatajpa.config.SpringDataJpaConfig;
+import com.spring.action.redis.springdatajpa.dao.RoleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

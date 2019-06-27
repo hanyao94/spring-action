@@ -7,12 +7,13 @@
  * 修改历史：
  * 2019/6/18 - seven - 创建。
  */
-package com.spring.action.jpa.config;
+package com.spring.action.redis.springdatajpa.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -30,8 +31,9 @@ import javax.sql.DataSource;
  * @author seven
  */
 @Configuration
-@ComponentScan(basePackages = {"com.spring.action.jpa.dao"})
-public class JpaConfig {
+//@ComponentScan(basePackages = {"com.spring.action.springdatajpa.dao"})
+@EnableJpaRepositories(basePackages = "com.spring.action.springdatajpa.dao")
+public class SpringDataJpaConfig {
   //  @Bean
 //  public DataSource dataSource() {
 //    DriverManagerDataSource ds = new DriverManagerDataSource();
@@ -56,12 +58,12 @@ public class JpaConfig {
   }
 
   @Bean
-  public LocalContainerEntityManagerFactoryBean emf(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
     LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
     emf.setDataSource(dataSource);
-    emf.setPersistenceUnitName("spring-action-jpa.persistent-unit");
+    emf.setPersistenceUnitName("spring-action-springDataJpa.persistent-unit");
     emf.setJpaVendorAdapter(jpaVendorAdapter);
-    emf.setPackagesToScan("com.spring.action.jpa.pojo");
+    emf.setPackagesToScan("com.spring.action.springdatajpa.pojo");
     return emf;
   }
 
@@ -77,12 +79,13 @@ public class JpaConfig {
 
   @Configuration
   @EnableTransactionManagement
-  public static class TransactionConfig implements TransactionManagementConfigurer {
+  public static class TransactionConfig {
 
     @Resource
     private EntityManagerFactory emf;
 
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
+    @Bean
+    public PlatformTransactionManager transactionManager() {
       JpaTransactionManager transactionManager = new JpaTransactionManager();
       transactionManager.setEntityManagerFactory(emf);
       return transactionManager;

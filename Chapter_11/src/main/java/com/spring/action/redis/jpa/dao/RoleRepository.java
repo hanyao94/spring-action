@@ -7,9 +7,9 @@
  * 修改历史：
  * 2019/6/18 - seven - 创建。
  */
-package com.spring.action.jpa.dao;
+package com.spring.action.redis.jpa.dao;
 
-import com.spring.action.jpa.pojo.Role;
+import com.spring.action.redis.jpa.pojo.Role;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

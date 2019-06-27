@@ -7,9 +7,9 @@
  * 修改历史：
  * 2019/6/23 - seven - 创建。
  */
-package com.spring.action.springdatajpa.dao;
+package com.spring.action.redis.springdatajpa.dao;
 
-import com.spring.action.springdatajpa.pojo.Role;
+import com.spring.action.redis.springdatajpa.pojo.Role;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

@@ -7,7 +7,7 @@
  * 修改历史：
  * 2019/6/18 - seven - 创建。
  */
-package com.spring.action.jpa.dao;
+package com.spring.action.redis.jpa.dao;
 
 import java.util.List;
 

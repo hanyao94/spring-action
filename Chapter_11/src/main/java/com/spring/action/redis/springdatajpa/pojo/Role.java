@@ -1,4 +1,4 @@
-package com.spring.action.jpa.pojo;
+package com.spring.action.redis.springdatajpa.pojo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

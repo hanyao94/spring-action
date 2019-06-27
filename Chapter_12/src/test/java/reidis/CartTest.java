@@ -1,0 +1,234 @@
+/**
+ * 版权所有(C)，上海海鼎信息工程股份有限公司，2016，所有权利保留。
+ * <p>
+ * 项目名：	spring-action
+ * 文件名：	CartTest.java
+ * 模块说明：
+ * 修改历史：
+ * 2019/6/27 - seven - 创建。
+ */
+package reidis;
+
+import com.spring.action.redis.config.RedisConfig;
+import com.spring.action.redis.pojo.Product;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.BoundListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+/**
+ * @author seven
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = RedisConfig.class)
+public class CartTest {
+
+  @Autowired
+  private RedisConnectionFactory cf;
+
+  @Autowired
+  private RedisTemplate<String, Product> redis;
+
+  @Autowired
+  private StringRedisTemplate stredis;
+
+
+  @Test
+  public void workingWithStringRedisTemplate() {
+    ValueOperations<String, String> operations= stredis.opsForValue();
+    operations.set("a","apple");
+    System.out.println(operations.get("a"));
+    stredis.delete("a");
+  }
+
+  @Test
+  public void workingWithSimpleValues() {
+    Product product = new Product();
+    product.setSku("9781617291203");
+    product.setName("Spring in Action");
+    product.setPrice(39.99f);
+
+    redis.opsForValue().set(product.getSku(), product);
+
+    Product found = redis.opsForValue().get(product.getSku());
+    assertEquals(product.getSku(), found.getSku());
+    assertEquals(product.getName(), found.getName());
+    assertEquals(product.getPrice(), found.getPrice(), 0.005);
+  }
+
+  @Test
+  public void workingWithLists() {
+    Product product = new Product();
+    product.setSku("9781617291203");
+    product.setName("Spring in Action");
+    product.setPrice(39.99f);
+
+    Product product2 = new Product();
+    product2.setSku("9781935182436");
+    product2.setName("Spring Integration in Action");
+    product2.setPrice(49.99f);
+
+    Product product3 = new Product();
+    product3.setSku("9781935182955");
+    product3.setName("Spring Batch in Action");
+    product3.setPrice(49.99f);
+
+    redis.opsForList().rightPush("cart", product);
+    redis.opsForList().rightPush("cart", product2);
+    redis.opsForList().rightPush("cart", product3);
+
+    assertEquals(3, redis.opsForList().size("cart").longValue());
+
+    Product first = redis.opsForList().leftPop("cart");
+    Product last = redis.opsForList().rightPop("cart");
+
+    assertEquals(product.getSku(), first.getSku());
+    assertEquals(product.getName(), first.getName());
+    assertEquals(product.getPrice(), first.getPrice(), 0.005);
+
+    assertEquals(product3.getSku(), last.getSku());
+    assertEquals(product3.getName(), last.getName());
+    assertEquals(product3.getPrice(), last.getPrice(), 0.005);
+
+    assertEquals(1, redis.opsForList().size("cart").longValue());
+  }
+
+  @Test
+  public void workingWithLists_range() {
+    for (int i = 0; i < 30; i++) {
+      Product product = new Product();
+      product.setSku("SKU-" + i);
+      product.setName("PRODUCT " + i);
+      product.setPrice(i + 0.99f);
+      redis.opsForList().rightPush("cart", product);
+    }
+
+    assertEquals(30, redis.opsForList().size("cart").longValue());
+
+    List<Product> products = redis.opsForList().range("cart", 2, 12);
+    for (int i = 0; i < products.size(); i++) {
+      Product product = products.get(i);
+      assertEquals("SKU-" + (i + 2), product.getSku());
+      assertEquals("PRODUCT " + (i + 2), product.getName());
+      assertEquals(i + 2 + 0.99f, product.getPrice(), 0.005);
+    }
+  }
+
+  @Test
+  public void performingOperationsOnSets() {
+    Product product = new Product();
+    product.setSku("9781617291203");
+    product.setName("Spring in Action");
+    product.setPrice(39.99f);
+
+    redis.opsForSet().add("cart", product);
+    assertEquals(1, redis.opsForSet().size("cart").longValue());
+  }
+
+  @Test
+  public void performingOperationsOnSets_setOperations() {
+    for (int i = 0; i < 30; i++) {
+      Product product = new Product();
+      product.setSku("SKU-" + i);
+      product.setName("PRODUCT " + i);
+      product.setPrice(i + 0.99f);
+      redis.opsForSet().add("cart1", product);
+      if (i % 3 == 0) {
+        redis.opsForSet().add("cart2", product);
+      }
+    }
+
+    Set<Product> diff = redis.opsForSet().difference("cart1", "cart2");
+    Set<Product> union = redis.opsForSet().union("cart1", "cart2");
+    Set<Product> isect = redis.opsForSet().intersect("cart1", "cart2");
+
+    assertEquals(20, diff.size());
+    assertEquals(30, union.size());
+    assertEquals(10, isect.size());
+
+    Product random = redis.opsForSet().randomMember("cart1");
+    // not sure what to assert here...the result will be random
+    assertNotNull(random);
+  }
+
+  @Test
+  public void bindingToAKey() {
+    Product product = new Product();
+    product.setSku("9781617291203");
+    product.setName("Spring in Action");
+    product.setPrice(39.99f);
+
+    Product product2 = new Product();
+    product2.setSku("9781935182436");
+    product2.setName("Spring Integration in Action");
+    product2.setPrice(49.99f);
+
+    Product product3 = new Product();
+    product3.setSku("9781935182955");
+    product3.setName("Spring Batch in Action");
+    product3.setPrice(49.99f);
+
+    //绑定到某个key上
+    BoundListOperations<String, Product> cart = redis.boundListOps("cart");
+    cart.rightPush(product);
+    cart.rightPush(product2);
+    cart.rightPush(product3);
+
+    assertEquals(3, cart.size().longValue());
+
+    Product first = cart.leftPop();
+    Product last = cart.rightPop();
+
+    assertEquals(product.getSku(), first.getSku());
+    assertEquals(product.getName(), first.getName());
+    assertEquals(product.getPrice(), first.getPrice(), 0.005);
+
+    assertEquals(product3.getSku(), last.getSku());
+    assertEquals(product3.getName(), last.getName());
+    assertEquals(product3.getPrice(), last.getPrice(), 0.005);
+
+    assertEquals(1, cart.size().longValue());
+  }
+
+/*  @Test
+  public void settingKeyAndValueSerializers() {
+    // need a local version so we can tweak the serializer
+    RedisTemplate<String, Product> redis = new RedisTemplate<>();
+    redis.setConnectionFactory(cf);
+    redis.setKeySerializer(new StringRedisSerializer());
+    redis.setValueSerializer(new Jackson2JsonRedisSerializer<>(Product.class));//使用Jackson 2，将对象序列化为JSON；
+    redis.afterPropertiesSet(); // if this were declared as a bean, you wouldn't have to do this
+
+    //RedisTemplate默认会使用JdkSerializationRedisSerializer，这意味着key和value都会通过Java进行序列化。
+    //StringRedisTemplate默认会使用StringRedisSerializer
+
+    Product product = new Product();
+    product.setSku("9781617291203");
+    product.setName("Spring in Action");
+    product.setPrice(39.99f);
+
+    redis.opsForValue().set(product.getSku(), product);
+
+    Product found = redis.opsForValue().get(product.getSku());
+    assertEquals(product.getSku(), found.getSku());
+    assertEquals(product.getName(), found.getName());
+    assertEquals(product.getPrice(), found.getPrice(), 0.005);
+
+    String json = stredis.opsForValue().get(product.getSku());
+    assertEquals("{\"sku\":\"9781617291203\",\"name\":\"Spring in Action\",\"price\":39.99}", json);
+  }*/
+}
