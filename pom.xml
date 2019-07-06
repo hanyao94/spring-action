@@ -20,6 +20,7 @@
     <module>Chapter_10</module>
     <module>Chapter_11</module>
     <module>Chapter_12</module>
+    <module>Chapter_13</module>
   </modules>
 
 
@@ -46,6 +47,8 @@
     <spring-data-jpa.version>1.11.9.RELEASE</spring-data-jpa.version>
     <spring-data-redis.version>2.1.5.RELEASE</spring-data-redis.version>
     <jedis.version>2.9.0</jedis.version>
+    <commons-dbcp.version>1.4</commons-dbcp.version>
+    <net.sf.ehcache.version>2.4.5</net.sf.ehcache.version>
   </properties>
 
 
@@ -209,9 +212,21 @@
       </dependency>
 
       <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>${commons-dbcp.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>${mysql.jdbc.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>net.sf.ehcache</groupId>
+        <artifactId>ehcache-core</artifactId>
+        <version>${net.sf.ehcache.version}</version>
       </dependency>
 
       <dependency>
