@@ -22,6 +22,7 @@
     <module>Chapter_12</module>
     <module>Chapter_13</module>
     <module>Chapter_14</module>
+    <module>Chapter_17</module>
   </modules>
 
 
@@ -50,6 +51,7 @@
     <jedis.version>2.9.0</jedis.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <net.sf.ehcache.version>2.4.5</net.sf.ehcache.version>
+    <spring-rabbit.version>2.1.6.RELEASE</spring-rabbit.version>
   </properties>
 
 
@@ -228,6 +230,12 @@
         <groupId>net.sf.ehcache</groupId>
         <artifactId>ehcache-core</artifactId>
         <version>${net.sf.ehcache.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-rabbit</artifactId>
+        <version>${spring-rabbit.version}</version>
       </dependency>
 
       <dependency>
