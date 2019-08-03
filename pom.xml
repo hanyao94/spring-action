@@ -23,6 +23,7 @@
     <module>Chapter_13</module>
     <module>Chapter_14</module>
     <module>Chapter_17</module>
+    <module>Chapter_19</module>
   </modules>
 
 
@@ -52,6 +53,7 @@
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <net.sf.ehcache.version>2.4.5</net.sf.ehcache.version>
     <spring-rabbit.version>2.1.6.RELEASE</spring-rabbit.version>
+    <javax.mail.version>1.6.2</javax.mail.version>
   </properties>
 
 
@@ -113,6 +115,13 @@
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-web</artifactId>
         <version>${spring-security.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
+        <version>${spring-security.version}</version>
+        <scope>compile</scope>
       </dependency>
 
       <dependency>
@@ -244,6 +253,14 @@
         <version>${junit.version}</version>
         <scope>test</scope>
       </dependency>
+
+      <!--邮箱-->
+      <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>${javax.mail.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 
