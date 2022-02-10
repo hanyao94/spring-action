@@ -46,7 +46,7 @@
     <spring-security.version>4.2.3.RELEASE</spring-security.version>
     <mysql.jdbc.version>5.1.42</mysql.jdbc.version>
     <version.javax.persistence>1.0.2</version.javax.persistence>
-    <hibernate-core.version>4.3.11.Final</hibernate-core.version>
+    <hibernate-core.version>5.4.24.Final</hibernate-core.version>
     <spring-data-jpa.version>1.11.9.RELEASE</spring-data-jpa.version>
     <spring-data-redis.version>2.1.5.RELEASE</spring-data-redis.version>
     <jedis.version>2.9.0</jedis.version>
